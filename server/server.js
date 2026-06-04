@@ -22,11 +22,15 @@ const envClientUrls = process.env.CLIENT_URLS
   ? process.env.CLIENT_URLS.split(",").map((url) => url.trim())
   : [];
 
+const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.trim() : null;
+
 const allowedOrigins = [
   ...defaultAllowedOrigins,
   ...envClientUrls,
-  process.env.CLIENT_URL?.trim(),
+  clientUrl,
 ].filter(Boolean);
+
+console.log("Allowed CORS origins:", allowedOrigins);
 
 const corsOptions = {
   origin: (origin, callback) => {
