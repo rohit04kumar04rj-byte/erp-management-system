@@ -11,21 +11,31 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+
 const errorHandler = require("./middlewares/errorMiddleware");
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://erp-management-system-mtw3yss90.vercel.app"
-  ],
-  credentials: true
-}));
+// ✅ CORS (FIXED FOR VERCEL + LOCAL)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://erp-management-system-zeta.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
+  })
+);
 
+// ✅ Handle preflight requests
+app.options("*", cors());
+
+// Middleware
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Root route
 app.get("/", (req, res) => {
   res.json({ message: "ERP API is running..." });
 });
@@ -44,10 +54,3 @@ app.use("/api/invoices", invoiceRoutes);
 app.use(errorHandler);
 
 module.exports = app;
-
-// Server start
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
