@@ -1,10 +1,25 @@
 import axios from "axios";
 
 // ✅ SAFE + PRODUCTION READY BASE URL
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL
-    ? `${import.meta.env.VITE_API_URL}/api`
-    : "https://erp-management-system-7zgh.onrender.com/api";
+const getApiBaseUrl = () => {
+  const defaultApiUrl = "https://erp-management-system-7zgh.onrender.com/api";
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (!envUrl) {
+    return defaultApiUrl;
+  }
+
+  if (typeof window !== "undefined") {
+    const currentOrigin = window.location.origin;
+    if (envUrl === currentOrigin || envUrl === `${currentOrigin}/`) {
+      return defaultApiUrl;
+    }
+  }
+
+  return `${envUrl.replace(/\/$/, "")}/api`;
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // 🔐 Get token from localStorage safely
 const getStoredToken = () => {

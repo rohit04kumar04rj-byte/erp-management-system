@@ -13,19 +13,26 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
-// 🔥 MUST BE FIRST
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://erp-management-system-r5fqrai79.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true
-  })
-);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://erp-management-system-r5fqrai79.vercel.app"
+];
 
-app.options("*", cors());
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  credentials: true,
+};
+
+// 🔥 MUST BE FIRST
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(morgan("dev"));
