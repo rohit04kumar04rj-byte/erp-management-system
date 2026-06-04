@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+// ✅ SAFE FALLBACK ADDED
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "https://erp-management-system-7zgh.onrender.com";
 
 const getStoredToken = () => {
   const userInfo = localStorage.getItem("userInfo");
 
-  if (!userInfo) {
-    return null;
-  }
+  if (!userInfo) return null;
 
   try {
     const parsed = JSON.parse(userInfo);
@@ -36,12 +36,9 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export const getErrorMessage = (error) => {
-  return (
-    error?.response?.data?.message ||
-    error?.message ||
-    "Something went wrong"
-  );
-};
+export const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.message ||
+  "Something went wrong";
 
 export default api;
