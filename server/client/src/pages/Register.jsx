@@ -51,7 +51,7 @@ const Register = () => {
       setSubmitting(true);
 
       // ✅ FIXED API CALL (IMPORTANT)
-      await api.post("/api/auth/register", {
+      await api.post("/auth/register", {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,

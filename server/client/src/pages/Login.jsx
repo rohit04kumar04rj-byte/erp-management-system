@@ -53,7 +53,7 @@ const Login = () => {
     try {
       setSubmitting(true);
 
-      const { data } = await api.post("/login", {
+      const { data } = await api.post("/auth/login", {
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
       });
