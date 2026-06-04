@@ -1,11 +1,45 @@
-import React from "react";
+import axios from "axios";
 
-const NotFound = () => {
-  return (
-    <div style={{ padding: "20px" }}>
-      <h2>404 - Page Not Found</h2>
-    </div>
-  );
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL + "/api"
+    : "https://erp-management-system-7zgh.onrender.com/api";
+
+const getStoredToken = () => {
+  const userInfo = localStorage.getItem("userInfo");
+
+  if (!userInfo) return null;
+
+  try {
+    const parsed = JSON.parse(userInfo);
+    return parsed?.token || null;
+  } catch (error) {
+    localStorage.removeItem("userInfo");
+    return null;
+  }
 };
 
-export default NotFound;
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+});
+
+api.interceptors.request.use(
+  (config) => {
+    const token = getStoredToken();
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+export const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.message ||
+  "Something went wrong";
+
+export default api;

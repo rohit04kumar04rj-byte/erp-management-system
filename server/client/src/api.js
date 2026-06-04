@@ -1,8 +1,7 @@
 import axios from "axios";
 
 // ✅ SAFE FALLBACK ADDED
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "https://erp-management-system-7zgh.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL + "/api" || "https://erp-management-system-7zgh.onrender.com";
 
 const getStoredToken = () => {
   const userInfo = localStorage.getItem("userInfo");
