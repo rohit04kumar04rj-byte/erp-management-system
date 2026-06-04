@@ -16,17 +16,18 @@ It helps manage business operations like products, customers, suppliers, orders,
 ---
 
 ## 🛠 Tech Stack
-- **Frontend:** React.js (if used, else update)
+- **Frontend:** React.js (Vite)
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Other Tools:** REST APIs
+- **Other Tools:** REST APIs , Nodemon , .env
 
 ---
 
 ## 📂 Project Structure
 ERP-Management-System/
 │── server/ # Backend logic
-│── scripts/ # Utility scripts
+│── server/client/ # Frontend (React + Vite)
+│── scripts/ # Dev scripts
 │── package.json
 
 ---
@@ -40,9 +41,22 @@ ERP-Management-System/
 
 npm install
 
-3. Run the server:
+3. Setup Environment Variables
+
+Create a .env file inside server/ folder and add:
+
+PORT=5001
+MONGO_URI=your_mongodb_connection_string
+
+4. Run the project (Frontend + Backend together)
    
- npm start
+npm run dev
+
+## 🌐 Running Ports
+
+- Frontend: http://localhost:5173/
+
+- Backend: http://localhost:5001/
 
 ---
 
