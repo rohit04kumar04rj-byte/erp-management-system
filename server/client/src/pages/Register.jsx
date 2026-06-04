@@ -50,16 +50,18 @@ const Register = () => {
     try {
       setSubmitting(true);
 
-      await api.post("/register", {
+      // ✅ FIXED API CALL (IMPORTANT)
+      await api.post("/api/auth/register", {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
         role: formData.role,
       });
 
+      toast.success("Registration successful");
+
       navigate("/login", {
         replace: true,
-        state: { successMessage: "Registration successful. Please log in." },
       });
     } catch (error) {
       toast.error(getErrorMessage(error));
