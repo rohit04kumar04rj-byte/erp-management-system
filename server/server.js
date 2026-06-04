@@ -13,14 +13,26 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
-const allowedOrigins = [
+const defaultAllowedOrigins = [
   "http://localhost:5173",
   "https://erp-management-system-r5fqrai79.vercel.app"
 ];
 
+const envClientUrls = process.env.CLIENT_URLS
+  ? process.env.CLIENT_URLS.split(",").map((url) => url.trim())
+  : [];
+
+const allowedOrigins = [
+  ...defaultAllowedOrigins,
+  ...envClientUrls,
+  process.env.CLIENT_URL?.trim(),
+].filter(Boolean);
+
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else if (process.env.NODE_ENV !== "production") {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
