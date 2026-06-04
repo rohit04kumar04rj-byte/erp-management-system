@@ -2,11 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+const customerRoutes = require("./routes/customerRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
+const salesOrderRoutes = require("./routes/salesOrderRoutes");
+const purchaseOrderRoutes = require("./routes/purchaseOrderRoutes");
+const grnRoutes = require("./routes/grnRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
+
 const app = express();
 
-// ======================
-// ✅ CORS FIX (CRITICAL)
-// ======================
+// 🔥 MUST BE FIRST
 app.use(
   cors({
     origin: [
@@ -18,25 +25,25 @@ app.use(
   })
 );
 
-// ✅ IMPORTANT for preflight
 app.options("*", cors());
 
-// ======================
-// Middleware
-// ======================
 app.use(express.json());
 app.use(morgan("dev"));
 
-// ======================
-// IMPORT APP ROUTES (if using app.js)
-// ======================
-const serverApp = require("./app"); // if you already split logic
+// routes
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/customers", customerRoutes);
+app.use("/api/suppliers", supplierRoutes);
+app.use("/api/sales-orders", salesOrderRoutes);
+app.use("/api/purchase-orders", purchaseOrderRoutes);
+app.use("/api/grn", grnRoutes);
+app.use("/api/invoices", invoiceRoutes);
 
-// OR if routes are inside this file, keep them here instead
+app.get("/", (req, res) => {
+  res.json({ message: "ERP API running" });
+});
 
-// ======================
-// START SERVER
-// ======================
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {

@@ -1,56 +1,56 @@
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+// const express = require("express");
+// const cors = require("cors");
+// const morgan = require("morgan");
 
-const customerRoutes = require("./routes/customerRoutes");
-const supplierRoutes = require("./routes/supplierRoutes");
-const salesOrderRoutes = require("./routes/salesOrderRoutes");
-const purchaseOrderRoutes = require("./routes/purchaseOrderRoutes");
-const grnRoutes = require("./routes/grnRoutes");
-const invoiceRoutes = require("./routes/invoiceRoutes");
+// const customerRoutes = require("./routes/customerRoutes");
+// const supplierRoutes = require("./routes/supplierRoutes");
+// const salesOrderRoutes = require("./routes/salesOrderRoutes");
+// const purchaseOrderRoutes = require("./routes/purchaseOrderRoutes");
+// const grnRoutes = require("./routes/grnRoutes");
+// const invoiceRoutes = require("./routes/invoiceRoutes");
 
-const authRoutes = require("./routes/authRoutes");
-const productRoutes = require("./routes/productRoutes");
+// const authRoutes = require("./routes/authRoutes");
+// const productRoutes = require("./routes/productRoutes");
 
-const errorHandler = require("./middlewares/errorMiddleware");
+// const errorHandler = require("./middlewares/errorMiddleware");
 
-const app = express();
+// const app = express();
+// // 
+// // ✅ CORS (FIXED FOR VERCEL + LOCAL)
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://erp-management-system-zeta.vercel.app"
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     credentials: true
+//   })
+// );
 
-// ✅ CORS (FIXED FOR VERCEL + LOCAL)
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://erp-management-system-zeta.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true
-  })
-);
+// // ✅ Handle preflight requests
+// app.options("*", cors());
 
-// ✅ Handle preflight requests
-app.options("*", cors());
+// // Middleware
+// app.use(express.json());
+// app.use(morgan("dev"));
 
-// Middleware
-app.use(express.json());
-app.use(morgan("dev"));
+// // Root route
+// app.get("/", (req, res) => {
+//   res.json({ message: "ERP API is running..." });
+// });
 
-// Root route
-app.get("/", (req, res) => {
-  res.json({ message: "ERP API is running..." });
-});
+// // Routes
+// app.use("/api/auth", authRoutes);
+// app.use("/api/products", productRoutes);
+// app.use("/api/customers", customerRoutes);
+// app.use("/api/suppliers", supplierRoutes);
+// app.use("/api/sales-orders", salesOrderRoutes);
+// app.use("/api/purchase-orders", purchaseOrderRoutes);
+// app.use("/api/grn", grnRoutes);
+// app.use("/api/invoices", invoiceRoutes);
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/customers", customerRoutes);
-app.use("/api/suppliers", supplierRoutes);
-app.use("/api/sales-orders", salesOrderRoutes);
-app.use("/api/purchase-orders", purchaseOrderRoutes);
-app.use("/api/grn", grnRoutes);
-app.use("/api/invoices", invoiceRoutes);
+// // Error handler (must be last)
+// app.use(errorHandler);
 
-// Error handler (must be last)
-app.use(errorHandler);
-
-module.exports = app;
+// module.exports = app;
