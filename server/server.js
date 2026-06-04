@@ -1,23 +1,44 @@
-const path = require("path");
-const dotenv = require("dotenv");
-dotenv.config({ path: path.join(__dirname, ".env") });
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
 
-const app = require("./app");
-const connectDB = require("./config/db");
+const app = express();
 
-const PORT = process.env.PORT || 5000;
+// ======================
+// ✅ CORS FIX (CRITICAL)
+// ======================
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://erp-management-system-r5fqrai79.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
+  })
+);
 
-const startServer = async () => {
-  try {
-    await connectDB();
+// ✅ IMPORTANT for preflight
+app.options("*", cors());
 
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error(error.message);
-    process.exit(1);
-  }
-};
+// ======================
+// Middleware
+// ======================
+app.use(express.json());
+app.use(morgan("dev"));
 
-startServer();
+// ======================
+// IMPORT APP ROUTES (if using app.js)
+// ======================
+const serverApp = require("./app"); // if you already split logic
+
+// OR if routes are inside this file, keep them here instead
+
+// ======================
+// START SERVER
+// ======================
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
