@@ -48,7 +48,6 @@ const corsOptions = {
 
 // 🔥 MUST BE FIRST
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(morgan("dev"));
