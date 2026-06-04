@@ -79,7 +79,14 @@ npm run dev
 
 ## 📸 Screenshots
 
-(Will be added in next step)
+### Dashboard
+![Dashboard](DASHBOARD.png)
+
+### Products
+![Products](PRODUCTS.png)
+
+### Customers
+![Customers](CUSTOMERS.png)
 
 ---
 
