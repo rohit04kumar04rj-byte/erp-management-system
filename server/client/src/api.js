@@ -1,8 +1,12 @@
 import axios from "axios";
 
-// ✅ SAFE FALLBACK ADDED
-const API_BASE_URL = import.meta.env.VITE_API_URL + "/api" || "https://erp-management-system-7zgh.onrender.com";
+// ✅ SAFE + PRODUCTION READY BASE URL
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api`
+    : "https://erp-management-system-7zgh.onrender.com/api";
 
+// 🔐 Get token from localStorage safely
 const getStoredToken = () => {
   const userInfo = localStorage.getItem("userInfo");
 
@@ -17,11 +21,13 @@ const getStoredToken = () => {
   }
 };
 
+// 🌐 Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
 });
 
+// 🔐 Attach token automatically
 api.interceptors.request.use(
   (config) => {
     const token = getStoredToken();
@@ -35,6 +41,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// ❌ Unified error handler
 export const getErrorMessage = (error) =>
   error?.response?.data?.message ||
   error?.message ||
