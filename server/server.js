@@ -13,6 +13,8 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
+console.log("Starting server/server.js");
+
 const defaultAllowedOrigins = [
   "http://localhost:5173",
   "https://erp-management-system-r5fqrai79.vercel.app"
